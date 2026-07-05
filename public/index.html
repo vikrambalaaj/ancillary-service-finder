@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ancillary Service Finder</title>
+    <link rel="stylesheet" href="styles.css?v=4" />
+  </head>
+  <body>
+    <div id="globalError" class="global-error hidden"></div>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">EK</span>
+        <div>
+          <h1>Ancillary Service Finder</h1>
+          <p class="subtitle">Emirates &middot; Farelogix ServiceListRQ &middot; Cabin Upgrades</p>
+        </div>
+      </div>
+      <div class="demo-wrap">
+        <label class="switch" for="demoToggle">
+          <input type="checkbox" id="demoToggle" />
+          <span class="slider"></span>
+        </label>
+        <span class="demo-label" id="demoLabel">Demo: OFF</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel form-panel">
+        <h2>Request Input</h2>
+        <p class="hint">All fields marked <span class="req">*</span> are mandatory. <span id="endpointInfo" class="endpoint-info"></span></p>
+        <form id="requestForm" novalidate>
+          <fieldset>
+            <legend>Transaction Control</legend>
+            <div class="grid" id="tcFields"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Booking &amp; Sale Info</legend>
+            <div class="grid" id="saleFields"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Flight Segment</legend>
+            <div class="grid" id="flightFields"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Pricing Options</legend>
+            <div class="grid" id="pricingFields"></div>
+          </fieldset>
+
+          <div class="actions">
+            <button type="submit" id="searchBtn" class="primary">Search</button>
+            <button type="button" id="fillMissingBtn" class="ghost">Fill missing fields</button>
+            <button type="button" id="resetBtn" class="ghost">Reset</button>
+          </div>
+          <div id="validationSummary" class="val-summary hidden"></div>
+        </form>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="result-header">
+          <h2>Response</h2>
+          <div class="tabs" id="tabs">
+            <button class="tab active" data-tab="cards">Services</button>
+            <button class="tab" data-tab="responseXml">Response XML</button>
+            <button class="tab" data-tab="requestXml">Request XML</button>
+          </div>
+        </div>
+
+        <div id="emptyState" class="empty">
+          <p>No results yet.</p>
+          <p class="muted">Fill the form and click <strong>Search</strong>, or turn on <strong>Demo</strong> to auto-fill the form first.</p>
+        </div>
+
+        <div id="resultCards" class="tab-panel active"></div>
+        <pre id="responseXml" class="tab-panel xml"></pre>
+        <pre id="requestXml" class="tab-panel xml"></pre>
+        <div id="loading" class="loading hidden">Submitting&hellip;</div>
+      </section>
+    </main>
+
+    <script type="module" src="app.js?v=4"></script>
+  </body>
+</html>

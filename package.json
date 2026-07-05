@@ -1,0 +1,28 @@
+{
+  "name": "ancillary-service-app",
+  "version": "1.0.0",
+  "description": "Farelogix Ancillary ServiceListRQ form app (Node.js + TypeScript)",
+  "type": "module",
+  "scripts": {
+    "dev:web": "esbuild public/app.ts --bundle --outfile=public/app.js --watch",
+    "dev:server": "tsx watch src/server.ts",
+    "dev": "concurrently -n web,server -c green,blue npm:dev:web npm:dev:server",
+    "build": "tsc -p tsconfig.server.json && esbuild public/app.ts --bundle --outfile=public/app.js --minify",
+    "start": "node dist/server.js",
+    "clean": "rm -rf dist public/app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "fast-xml-parser": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.0",
+    "concurrently": "^8.2.2",
+    "esbuild": "^0.23.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}
