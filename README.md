@@ -71,8 +71,10 @@ The endpoint URL is read from environment variables (loaded from `.env` automati
 | `FARELOGIX_URL` | `https://ekd.farelogix.com/sandbox-uat/flxm` | Farelogix ServiceList endpoint hit by Search |
 | `FARELOGIX_TIMEOUT_MS` | `20000` | Request timeout |
 | `USE_SAMPLE_RESPONSE` | `false` | Set to `true` to skip the live call and return the attached sample (offline mode) |
+| `ALWAYS_SHOW_SERVICES` | `true` | When the live endpoint returns no services, fall back to sample services so the Services tab is never empty |
+| `CORS_ORIGIN` | _(all)_ | Comma-separated allowlist of origins for `/api`; unset allows all origins |
 | `PORT` | `3000` | Server port |
 
-The SOAP body carries the credentials (`ns6:iden u/p`) exactly as in the attached valid request; the only HTTP header sent is `Content-Type: application/xml`. The configured endpoint is shown live in the form panel (green dot = live, gold dot = sample/offline).
+The API enables CORS for all origins by default (preflight `OPTIONS` handled), so the frontend can call `/api/*` from any origin. Restrict it with `CORS_ORIGIN` when deploying. The browser never calls Farelogix directly — the Node server proxies the SOAP request, which avoids the cross-origin block on the Farelogix endpoint.
 
 If the live call fails (network/timeout/SOAP fault), Search returns HTTP 502 with a descriptive message and the endpoint it tried.

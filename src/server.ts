@@ -15,8 +15,23 @@ try {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 
+// CORS: allow all origins by default, or a comma-separated allowlist via
+// CORS_ORIGIN (e.g. "https://mysite.com,http://localhost:5173").
+const corsOrigin = process.env.CORS_ORIGIN;
+const corsOptions: cors.CorsOptions = {
+  origin: corsOrigin
+    ? corsOrigin.split(",").map((o) => o.trim()).filter(Boolean)
+    : true, // reflect request origin (allow all)
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: false,
+  maxAge: 86400,
+};
+
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
+// Ensure every preflight OPTIONS request gets the CORS headers and a 204.
+app.options("*", cors(corsOptions));
 app.use(express.json({ limit: "1mb" }));
 
 // Return clean JSON for malformed request bodies instead of Express's HTML page.
